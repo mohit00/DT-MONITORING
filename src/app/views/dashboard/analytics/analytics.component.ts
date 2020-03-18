@@ -1305,13 +1305,24 @@ this.ambientLoad();
     this.webService.Kv11data().subscribe(res=>{
       console.log("11KV" + JSON.stringify(res))
       this.Kv11datalist = res['resource']
+      this.loadOption.series[0].data= []
+      this.loadOption.series[0].data.push(this.Kv11datalist.R_Load)
+      this.loadupdateFlag = false;
+    
+      setTimeout(() => {
+        this.loadupdateFlag = true;
+        this.loadchart.reflow();
+   
+      }, 1000)
+
     })
   }
   Kv33data(){
     this.webService.Kv33data().subscribe(res=>{
       console.log("33KV" + JSON.stringify(res))
-      this.Kv33datalist = res['resource']
+      this.Kv33datalist = res['resource'] 
 
+     
     })
 
   }
