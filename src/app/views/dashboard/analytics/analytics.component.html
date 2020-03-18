@@ -1,0 +1,363 @@
+<!-- First row -->
+<mat-card class="p-0" [@animate]="{ value: '*', params: { y: '50px', delay: '300ms' } }">
+  <p style="padding:15px;    padding-bottom: 30px;"><span style="float: left;">Alerts:</span> <span
+      (mouseover)="mouseIn()" (mouseout)="mouseOut()" style="float: left;margin-left:10px ;" [@fadeInOut]="alertState">
+      <span style="font-size: 12px;"> <span><strong> {{alarmIndex}} ) </strong></span> <span
+          style="margin-left: 10px;">{{setAlarm.device_name}} : <strong>{{setAlarm.alarm_id}}</strong> :
+          {{setAlarm.alarm_time}} </span></span>
+    </span></p>
+</mat-card>
+<!--/ End first row -->
+<!-- 2nd, 3rd row 
+-->
+<div fxLayout="row wrap">
+  <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" *ngIf="temperatureData"
+    [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }">
+
+    <!-- <div fxFlex="100" fxFlex.gt-sm="10" fxFlex.sm="10"></div> -->
+
+    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="25">
+      <mat-card>
+        <p>Oil Temperature</p>
+        <highcharts-chart [Highcharts]="Highcharts" [constructorType]="chartConstructor" [options]="temprature1stOption"
+          [callbackFunction]="temprature1stCallback" [(update)]="temprature1stupdateFlag"
+          style="width: 100%;  display: block; height:230px"></highcharts-chart>
+      </mat-card>
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="25">
+      <mat-card>
+        <p>Winding Temperature</p>
+        <highcharts-chart [Highcharts]="Highcharts" [constructorType]="chartConstructor" [options]="temprature2stOption"
+        [callbackFunction]="temprature2stCallback" [(update)]="temprature2stupdateFlag"
+
+          style="width: 100%;  display: block;height:230px"></highcharts-chart>
+      </mat-card>
+    </div>
+
+    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="25">
+      <mat-card>
+        <p>Load (MVA)</p>
+        <highcharts-chart [Highcharts]="Highcharts" [constructorType]="chartConstructor" [options]="loadOption"
+          [callbackFunction]="loadCallback" [(update)]="loadupdateFlag"
+          style="width: 100%;  display: block;height:230px"></highcharts-chart>
+      </mat-card>
+    </div>
+
+    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="25"  *ngIf ="temperatureData">
+      <mat-card   style="    height: 265px;
+      overflow-y: auto;">
+       
+        <p>States</p>
+        <div fxLayout="row wrap">
+
+         <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100"  >
+        <!-- <mat-list *ngIf ="temperatureData">
+           <ng-template  >
+          <mat-list-item *ngFor="let folder of temperatureData.state">
+             <h4 mat-line>{{folder.model_name}}</h4>
+            <p mat-line> {{folder.state}} </p>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </ng-template>
+        </mat-list> -->
+
+        <mat-list class ="dashList">
+          <ng-container   *ngFor="let folder of temperatureData.state">
+           <mat-list-item >
+            <!-- <mat-icon mat-list-icon>folder</mat-icon> -->
+            <h4 mat-line>{{folder.model_name}}
+
+              <p mat-line style="    float: right;     margin-bottom: 0px;">  <mat-chip mat-sm-chip [color]="folder.state == 'N' ? 'warn' : 'primary'" [selected]="folder.state == 'N'">{{folder.state == 'N' ? 'Off' : 'On'}}</mat-chip>
+              </p>
+            </h4>
+         
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </ng-container>
+        </mat-list>
+      </div>
+    </div>
+      </mat-card>
+    </div>
+
+    <!-- <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="100" *ngIf="temperatureData"
+      [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }"></div> -->
+
+
+  </div>
+  <div style="    margin: auto;" fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100"
+    [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }">
+    <mat-card >
+      <p>11/KV</p>
+    </mat-card>
+  </div>
+  <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100"
+    [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }" *ngIf ="Kv11datalist">
+
+    <div style="    margin: auto;" fxFlex="100" fxFlex.gt-sm="35" fxFlex.sm="50"
+      [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }">
+
+      <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="50"
+        [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }">
+
+        <mat-card class="">
+          <p class="">R  Voltage</p>
+          <div class="progress-wrapper">
+
+            <round-progress [current]="Kv11datalist.R_Voltage" [max]="Kv11datalist.max_voltage" [color]="'red'" [background]="'#eaeaea'" [radius]="86"
+              [stroke]="10" [semicircle]="false" [rounded]="true" [clockwise]="true" [responsive]="true"
+              [duration]="800" [animation]="'easeInOutQuart'" [animationDelay]="0"
+              (onRender)="doSomethingWithCurrentValue($event)"></round-progress>
+            <div class="text">{{Kv11datalist.R_Voltage}} KV</div>
+
+          </div>
+        </mat-card>
+      </div>
+      <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="50"
+        [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }">
+
+        <mat-card class="">
+          <p class="">Y  Voltage</p>
+          <div class="progress-wrapper">
+
+            <round-progress [current]="Kv11datalist.Y_Voltage" [max]="Kv11datalist.max_voltage" [color]="'yellow'" [background]="'#eaeaea'" [radius]="86"
+              [stroke]="10" [semicircle]="false" [rounded]="true" [clockwise]="true" [responsive]="true"
+              [duration]="800" [animation]="'easeInOutQuart'" [animationDelay]="0"
+              (onRender)="doSomethingWithCurrentValue($event)"></round-progress>
+            <div class="text">{{Kv11datalist.Y_Voltage}} KV</div>
+
+          </div>
+        </mat-card>
+      </div>
+      <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="50"
+        [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }">
+
+        <mat-card class="">
+          <p class="">B  Voltage</p>
+          <div class="progress-wrapper">
+            <round-progress [current]="Kv11datalist.B_Voltage" [max]="Kv11datalist.max_voltage" [color]="'blue'" [background]="'#eaeaea'" [radius]="86"
+              [stroke]="10" [semicircle]="false" [rounded]="true" [clockwise]="true" [responsive]="true"
+              [duration]="800" [animation]="'easeInOutQuart'" [animationDelay]="0"
+              (onRender)="doSomethingWithCurrentValue($event)"></round-progress>
+            <div class="text">{{Kv11datalist.B_Voltage}} KV</div>
+
+          </div>
+        </mat-card>
+      </div>
+    </div>
+
+    <div style="    margin: auto;" fxFlex="100" fxFlex.gt-sm="35" fxFlex.sm="50"
+      [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }">
+      <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="50"
+        [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }">
+
+        <mat-card class="">
+          <p class="">R Current</p>
+          <div class="progress-wrapper">
+
+            <round-progress [current]="Kv11datalist.R_Current" [max]="Kv11datalist.max_current" [color]="'red'" [background]="'#eaeaea'" [radius]="86"
+              [stroke]="10" [semicircle]="false" [rounded]="true" [clockwise]="true" [responsive]="true"
+              [duration]="800" [animation]="'easeInOutQuart'" [animationDelay]="0"
+              (onRender)="doSomethingWithCurrentValue($event)"></round-progress>
+            <div class="text">{{Kv11datalist.R_Current}} AMP</div>
+
+          </div>
+        </mat-card>
+      </div>
+      <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="50"
+        [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }">
+
+        <mat-card class="">
+          <p class="">Y Current</p>
+          <div class="progress-wrapper">
+            <round-progress [current]="Kv11datalist.Y_Current" [max]="Kv11datalist.max_current" [color]="'yellow'" [background]="'#eaeaea'" [radius]="86"
+              [stroke]="10" [semicircle]="false" [rounded]="true" [clockwise]="true" [responsive]="true"
+              [duration]="800" [animation]="'easeInOutQuart'" [animationDelay]="0"
+              (onRender)="doSomethingWithCurrentValue($event)"></round-progress>
+            <div class="text">{{Kv11datalist.Y_Current}} AMP</div>
+
+          </div>
+        </mat-card>
+      </div>
+      <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="50"
+        [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }">
+
+        <mat-card class="">
+          <p class="">B Current</p>
+          <div class="progress-wrapper">
+            <round-progress [current]="Kv11datalist.B_Current" [max]="Kv11datalist.max_current" [color]="'blue'" [background]="'#eaeaea'" [radius]="86"
+              [stroke]="10" [semicircle]="false" [rounded]="true" [clockwise]="true" [responsive]="true"
+              [duration]="800" [animation]="'easeInOutQuart'" [animationDelay]="0"
+              (onRender)="doSomethingWithCurrentValue($event)"></round-progress>
+            <div class="text">{{Kv11datalist.B_Current}} AMP</div>
+
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <div style="    margin: auto;" fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100"
+    [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }">
+    <mat-card>
+      <p>33/KV</p>
+    </mat-card>
+  </div>
+  <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100"
+    [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }" *ngIf ="Kv33datalist">
+
+    <div style="    margin: auto;" fxFlex="100" fxFlex.gt-sm="35" fxFlex.sm="50"
+      [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }">
+
+      <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="50"
+        [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }">
+
+        <mat-card class="">
+          <p class="">R  Voltage</p>
+          <div class="progress-wrapper">
+
+            <round-progress [current]="Kv33datalist.R_Voltage" [max]="Kv33datalist.max_voltage" [color]="'red'" [background]="'#eaeaea'" [radius]="86"
+              [stroke]="10" [semicircle]="false" [rounded]="true" [clockwise]="true" [responsive]="true"
+              [duration]="800" [animation]="'easeInOutQuart'" [animationDelay]="0"
+              (onRender)="doSomethingWithCurrentValue($event)"></round-progress>
+            <div class="text">{{Kv33datalist.R_Voltage}} KV</div>
+
+          </div>
+        </mat-card>
+      </div>
+      <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="50"
+        [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }">
+
+        <mat-card class="">
+          <p class="">Y  Voltage</p>
+          <div class="progress-wrapper">
+
+            <round-progress [current]="Kv33datalist.Y_Voltage" [max]="Kv33datalist.max_voltage" [color]="'yellow'" [background]="'#eaeaea'" [radius]="86"
+              [stroke]="10" [semicircle]="false" [rounded]="true" [clockwise]="true" [responsive]="true"
+              [duration]="800" [animation]="'easeInOutQuart'" [animationDelay]="0"
+              (onRender)="doSomethingWithCurrentValue($event)"></round-progress>
+            <div class="text">{{Kv33datalist.Y_Voltage}} KV</div>
+
+          </div>
+        </mat-card>
+      </div>
+      <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="50"
+        [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }">
+
+        <mat-card class="">
+          <p class="">B  Voltage</p>
+          <div class="progress-wrapper">
+            <round-progress   [current]="Kv33datalist.B_Voltage" [max]="Kv33datalist.max_voltage"  [color]="'blue'" [background]="'#eaeaea'" [radius]="86"
+              [stroke]="10" [semicircle]="false" [rounded]="true" [clockwise]="true" [responsive]="true"
+              [duration]="800" [animation]="'easeInOutQuart'" [animationDelay]="0"
+              (onRender)="doSomethingWithCurrentValue($event)"></round-progress>
+            <div class="text">{{Kv33datalist.B_Voltage}} KV</div>
+
+          </div>
+        </mat-card>
+      </div>
+    </div>
+
+    <div style="    margin: auto;" fxFlex="100" fxFlex.gt-sm="35" fxFlex.sm="50"
+      [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }" >
+      <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="50"
+        [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }">
+
+        <mat-card class="">
+          <p class="">R Current</p>
+          <div class="progress-wrapper">
+
+            <round-progress  [current]="Kv33datalist.R_Current" [max]="Kv33datalist.max_current" [color]="'red'" [background]="'#eaeaea'" [radius]="86"
+              [stroke]="10" [semicircle]="false" [rounded]="true" [clockwise]="true" [responsive]="true"
+              [duration]="800" [animation]="'easeInOutQuart'" [animationDelay]="0"
+              (onRender)="doSomethingWithCurrentValue($event)"></round-progress>
+            <div class="text">{{Kv33datalist.R_Current}} AMP</div>
+
+          </div>
+        </mat-card>
+      </div>
+      <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="50"
+        [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }">
+
+        <mat-card class="">
+          <p class="">Y Current</p>
+          <div class="progress-wrapper">
+            <round-progress [current]="Kv33datalist.Y_Current" [max]="Kv33datalist.max_current" [color]="'yellow'" [background]="'#eaeaea'" [radius]="86"
+              [stroke]="10" [semicircle]="false" [rounded]="true" [clockwise]="true" [responsive]="true"
+              [duration]="800" [animation]="'easeInOutQuart'" [animationDelay]="0"
+              (onRender)="doSomethingWithCurrentValue($event)"></round-progress>
+            <div class="text">{{Kv33datalist.Y_Current}} AMP</div>
+
+          </div>
+        </mat-card>
+      </div>
+      <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="50"
+        [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }">
+
+        <mat-card class="">
+          <p class="">B Current</p>
+          <div class="progress-wrapper">
+            <round-progress [current]="Kv33datalist.B_Current" [max]="Kv33datalist.max_current" [color]="'blue'" [background]="'#eaeaea'" [radius]="86"
+              [stroke]="10" [semicircle]="false" [rounded]="true" [clockwise]="true" [responsive]="true"
+              [duration]="800" [animation]="'easeInOutQuart'" [animationDelay]="0"
+              (onRender)="doSomethingWithCurrentValue($event)"></round-progress>
+            <div class="text">{{Kv33datalist.B_Current}} AMP</div>
+
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="50"
+    [@animate]="{ value: '*', params: { y: '50px', delay: '600ms' } }">
+    <mat-card>
+      <div fxLayout="row wrap" style="padding-top: 5px;">
+
+      <form [formGroup]="formgroup" style="width: 100%;">
+      <p  style="width: 70%; float: left;"> Temperature Vs Load </p>  <div style="width: 30%; float: right;"> 
+     
+        <mat-form-field style="float: right; margin-right: 10px;">
+          <input matInput [matDatepicker]="picker" placeholder="Select Date" formControlName="date" (dateChange)="changeGraph()" >
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </form>
+      </div>
+      <div fxLayout="row wrap" style="padding-top: 5px;">
+
+        <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" *ngIf="temperatureData"> 
+          <div
+          (mousemove)="synchronizeTooltips($event)"
+          (touchmove)="synchronizeTooltips($event)"
+          (touchstart)="synchronizeTooltips($event)"
+        >
+          <highcharts-chart style="width: 100%; display: block; height: 220px;" [Highcharts]="Highcharts"
+            [options]="chartOptions1"
+            [callbackFunction]="chartOptions1Callback" [(update)]="chartOptions1updateFlag"
+            >
+            
+          </highcharts-chart>
+          
+          <highcharts-chart style="width: 100%; display: block; height: 220px;" [Highcharts]="Highcharts"
+            [options]="chartOptions2"
+            [callbackFunction]="chartOptions2Callback" [(update)]="chartOptions2updateFlag"
+            >
+          </highcharts-chart>
+          <highcharts-chart style="width: 100%; display: block; height: 220px;" [Highcharts]="Highcharts"
+            [options]="chartOptions3"
+            [callbackFunction]="chartOptions3Callback" [(update)]="chartOptions3updateFlag"
+            >
+          </highcharts-chart>
+        </div>
+</div>
+
+      </div>
+    </mat-card>
+  </div>
+
+  <!--/ End 3rd row, 1st column -->
+
+  <!-- 3rd row, 2nd column -->
+
+  <!--/ End 3rd row, 2nd column -->
+</div>
