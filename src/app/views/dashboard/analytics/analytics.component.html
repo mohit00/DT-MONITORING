@@ -10,78 +10,71 @@
 <!--/ End first row -->
 <!-- 2nd, 3rd row 
 -->
+<div fxLayout="row wrap" *ngIf="temperatureData">
+  <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" 
+    [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }">
+    <mat-card>
+      <p>States</p>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="10" fxFlex.sm="10" 
+        [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }" *ngFor ="let list of temperatureData.state">
+        <mat-card style="text-align: center;">
+          <p>{{list.model_name}}</p>
+          <p>
+            <mat-chip mat-sm-chip  class ="redanimation">
+              <span style="color:white"  *ngIf ="list.state == 'N'">
+              Off
+              </span>
+              </mat-chip>
+            <mat-chip mat-sm-chip  *ngIf ="list.state != 'N'" class ="greenanimation">  <span style="color:white">
+              ON
+              </span></mat-chip>
+
+          </p>
+
+        </mat-card>
+        
+      </div>
+</div>
+    
+    </mat-card>
+  </div>
+</div>
 <div fxLayout="row wrap">
   <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" *ngIf="temperatureData"
     [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }">
 
     <!-- <div fxFlex="100" fxFlex.gt-sm="10" fxFlex.sm="10"></div> -->
 
-    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="25">
+    <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="33.3">
       <mat-card>
         <p>Oil Temperature</p>
         <highcharts-chart [Highcharts]="Highcharts" [constructorType]="chartConstructor" [options]="temprature1stOption"
           [callbackFunction]="temprature1stCallback" [(update)]="temprature1stupdateFlag"
-          style="width: 100%;  display: block; height:230px"></highcharts-chart>
+          style="width: 100%;  display: block; height:250px"></highcharts-chart>
       </mat-card>
     </div>
-    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="25">
+    <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="33.3">
       <mat-card>
         <p>Winding Temperature</p>
         <highcharts-chart [Highcharts]="Highcharts" [constructorType]="chartConstructor" [options]="temprature2stOption"
         [callbackFunction]="temprature2stCallback" [(update)]="temprature2stupdateFlag"
 
-          style="width: 100%;  display: block;height:230px"></highcharts-chart>
+          style="width: 100%;  display: block;height:250px"></highcharts-chart>
       </mat-card>
     </div>
 
-    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="25">
+    <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="33.3">
       <mat-card>
         <p>Load (MVA)</p>
         <highcharts-chart [Highcharts]="Highcharts" [constructorType]="chartConstructor" [options]="loadOption"
           [callbackFunction]="loadCallback" [(update)]="loadupdateFlag"
-          style="width: 100%;  display: block;height:230px"></highcharts-chart>
+          style="width: 100%;  display: block;height:250px"></highcharts-chart>
       </mat-card>
     </div>
+ 
 
-    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="25"  *ngIf ="temperatureData">
-      <mat-card   style="    height: 265px;
-      overflow-y: auto;">
-       
-        <p>States</p>
-        <div fxLayout="row wrap">
-
-         <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100"  >
-        <!-- <mat-list *ngIf ="temperatureData">
-           <ng-template  >
-          <mat-list-item *ngFor="let folder of temperatureData.state">
-             <h4 mat-line>{{folder.model_name}}</h4>
-            <p mat-line> {{folder.state}} </p>
-          </mat-list-item>
-          <mat-divider></mat-divider>
-        </ng-template>
-        </mat-list> -->
-
-        <mat-list class ="dashList">
-          <ng-container   *ngFor="let folder of temperatureData.state">
-           <mat-list-item >
-            <!-- <mat-icon mat-list-icon>folder</mat-icon> -->
-            <h4 mat-line>{{folder.model_name}}
-
-              <p mat-line style="    float: right;     margin-bottom: 0px;">  <mat-chip mat-sm-chip [color]="folder.state == 'N' ? 'warn' : 'primary'" [selected]="folder.state == 'N'">{{folder.state == 'N' ? 'Off' : 'On'}}</mat-chip>
-              </p>
-            </h4>
-         
-          </mat-list-item>
-          <mat-divider></mat-divider>
-        </ng-container>
-        </mat-list>
-      </div>
-    </div>
-      </mat-card>
-    </div>
-
-    <!-- <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="100" *ngIf="temperatureData"
-      [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }"></div> -->
+     
 
 
   </div>

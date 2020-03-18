@@ -1715,7 +1715,7 @@ wtiLoad(){
       enabled: false
     },
     xAxis: {
-      
+      visible:false,
       categories: ["1", "2", "3", "4", "5", "6",
         "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"],
 
@@ -1777,7 +1777,8 @@ wtiLoad(){
     series: [
       {
         data: [29, 25, 24, 24, 25, 24, 23, 25, 26, 25, 22, 24, 29, 25, 24, 24, 25, 24, 23, 25, 26, 25, 22, 24],
-        name: "Ambient Temperature"
+        name: "Ambient Temperature",
+        color:"#4caf50"
       } as Highcharts.SeriesLineOptions
     ]
   };
@@ -1803,6 +1804,7 @@ wtiLoad(){
       enabled: false
     },
     xAxis: {
+      visible:false,
       crosshair: true,
       categories: ["1", "2", "3", "4", "5", "6",
         "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"],
@@ -1863,7 +1865,9 @@ wtiLoad(){
     series: [
       {
         data: [40, 41, 40, 42, 41, 41, 40, 41, 40, 40, 42, 46, 40, 41, 40, 42, 41, 41, 40, 41, 40, 40, 42, 46],
-        name: "Sync group A (second)"
+        name: "Sync group A (second)",
+        color:"#ba450b"
+
       } as Highcharts.SeriesLineOptions
     ]
   };
@@ -1874,7 +1878,8 @@ wtiLoad(){
       spacingTop: 20,
       spacingBottom: 20,
       className: "chart-sync-a",
-      zoomType: 'x',
+      zoomType: 'x', 
+      
     },
     title: {
       text: "Load (MVA)",
@@ -1890,7 +1895,7 @@ wtiLoad(){
     },
     xAxis: {
       title: { text: '<b>Hours</b>' },
-
+visible:false,
       crosshair: true,
       categories: ["1", "2", "3", "4", "5", "6",
         "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"],
@@ -1952,7 +1957,8 @@ wtiLoad(){
     series: [
       {
         data: [3, 3.1, 3.1, 3.1, 2.9, 3.2, 3.4, 3.6, 2.8, 2.9, 3.1, 2.9, 3.1, 3, 3.1, 3.1, 3.1, 2.9, 3.2, 3.4, 3.6, 2.8, 2.9, 3.1],
-        name: "Sync group B"
+        name: "Sync group B",
+        color:"#063b6e"
       } as Highcharts.SeriesLineOptions
     ]
   };
